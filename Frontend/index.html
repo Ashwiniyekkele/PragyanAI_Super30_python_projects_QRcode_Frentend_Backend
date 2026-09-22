@@ -1,597 +1,575 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+```
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <meta
-        name="description"
-        content="PragyanAI QR Code Generator and Decoder"
-    >
+<meta
+    name="description"
+    content="PragyanAI PDF Merger"
+>
 
-    <title>
-        PragyanAI QR Code Generator & Decoder
-    </title>
+<title>
+    PragyanAI PDF Merger
+</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+```
 
 </head>
 
-
 <body>
+
+```
+<!-- ==================================================
+     HEADER
+=================================================== -->
+
+<header class="header">
+
+    <div class="container">
+
+        <h1>
+            PragyanAI PDF Merger
+        </h1>
+
+        <p>
+            Upload, Merge and Download PDF Files
+        </p>
+
+        <span class="technology-badge">
+            HTML + CSS + JavaScript + FastAPI
+        </span>
+
+    </div>
+
+</header>
+
+
+<!-- ==================================================
+     MAIN
+=================================================== -->
+
+<main class="container main-content">
 
 
     <!-- ==================================================
-         HEADER
+         API STATUS
     =================================================== -->
 
-    <header class="header">
+    <section class="status-card">
 
-        <div class="container">
+        <div>
 
-            <h1>
-               PragyanAI  QR Code Generator & Decoder
-            </h1>
+            <h3>
+                Backend API Status
+            </h3>
 
-            <p>
-                Generate, Download and Decode QR Codes
+            <p id="apiStatus">
+                Checking backend...
             </p>
-
-            <span class="technology-badge">
-                HTML + CSS + JavaScript + FastAPI
-            </span>
 
         </div>
 
-    </header>
+        <span
+            id="statusIndicator"
+            class="status-indicator checking"
+        >
+            ●
+        </span>
+
+    </section>
 
 
     <!-- ==================================================
-         MAIN
+         MERGE PDF
     =================================================== -->
 
-    <main class="container main-content">
+    <section class="card">
 
+        <div class="section-header">
 
-        <!-- ==================================================
-             API STATUS
-        =================================================== -->
-
-        <section class="status-card">
+            <div class="section-number">
+                1
+            </div>
 
             <div>
 
-                <h3>
-                    Backend API Status
-                </h3>
+                <h2>
+                    Merge PDF Files
+                </h2>
 
-                <p id="apiStatus">
-                    Checking backend...
+                <p>
+                    Select two or more PDF files to merge them into one PDF.
                 </p>
 
             </div>
 
-            <span
-                id="statusIndicator"
-                class="status-indicator checking"
-            >
-                ●
-            </span>
+        </div>
 
-        </section>
 
+        <label for="pdfFiles">
+            Select PDF Files
+        </label>
 
-        <!-- ==================================================
-             GENERATE QR CODE
-        =================================================== -->
 
-        <section class="card">
+        <input
+            type="file"
+            id="pdfFiles"
+            accept="application/pdf"
+            multiple
+        >
 
-            <div class="section-header">
 
-                <div class="section-number">
-                    1
-                </div>
+        <p class="file-help">
+            Supported: PDF files | Select multiple files
+        </p>
 
-                <div>
 
-                    <h2>
-                        Generate QR Code
-                    </h2>
+        <!-- Selected Files -->
 
-                    <p>
-                        Enter a URL, text or any information.
-                    </p>
+        <div
+            id="fileList"
+            class="preview-container hidden"
+        >
 
-                </div>
+            <h3>
+                Selected PDF Files
+            </h3>
 
-            </div>
-
-
-            <label for="qrData">
-                URL or Information
-            </label>
-
-
-            <textarea
-                id="qrData"
-                placeholder="Example: https://pragyanai.com"
-                maxlength="5000"
-            ></textarea>
-
-
-            <div class="character-count">
-
-                <span id="characterCount">
-                    0
-                </span>
-
-                / 5000 characters
-
-            </div>
-
-
-            <button
-                id="generateButton"
-                class="primary-button"
-            >
-                🔳 Generate QR Code
-            </button>
-
-
-            <div
-                id="generateMessage"
-                class="message"
-            ></div>
-
-
-            <!-- Generated QR -->
-
-            <div
-                id="qrContainer"
-                class="qr-container hidden"
-            >
-
-                <h3>
-                    Generated QR Code
-                </h3>
-
-
-                <img
-                    id="qrImage"
-                    alt="Generated QR Code"
-                >
-
-
-                <div class="qr-actions">
-
-                    <a
-                        id="downloadButton"
-                        class="secondary-button"
-                        download="generated_qr_code.png"
-                    >
-                        ⬇️ Download QR
-                    </a>
-
-
-                    <button
-                        id="decodeGeneratedButton"
-                        class="secondary-button"
-                    >
-                        🔍 Decode Generated QR
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="decodedGenerated"
-                    class="result-box"
-                ></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             DECODE QR CODE
-        =================================================== -->
-
-        <section class="card">
-
-            <div class="section-header">
-
-                <div class="section-number">
-                    2
-                </div>
-
-                <div>
-
-                    <h2>
-                        Decode Existing QR Code
-                    </h2>
-
-                    <p>
-                        Upload an existing QR image.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <label for="qrFile">
-                Select QR Image
-            </label>
-
-
-            <input
-                type="file"
-                id="qrFile"
-                accept="image/png,image/jpeg,image/webp,image/bmp"
-            >
-
-
-            <p class="file-help">
-                Supported: PNG, JPG, JPEG, WEBP, BMP
-                | Maximum: 5 MB
-            </p>
-
-
-            <!-- Image Preview -->
-
-            <div
-                id="uploadedPreview"
-                class="preview-container hidden"
-            >
-
-                <h3>
-                    Image Preview
-                </h3>
-
-                <img
-                    id="previewImage"
-                    alt="Uploaded QR Code"
-                >
-
-            </div>
-
-
-            <button
-                id="decodeUploadButton"
-                class="primary-button"
-                disabled
-            >
-                🔍 Decode QR Code
-            </button>
-
-
-            <div
-                id="decodeMessage"
-                class="message"
-            ></div>
-
-
-            <div
-                id="decodedUploaded"
-                class="result-box"
-            ></div>
-
-        </section>
-
-
-        <!-- ==================================================
-             API INFORMATION
-        =================================================== -->
-
-        <section class="card">
-
-            <div class="section-header">
-
-                <div class="section-number">
-                    3
-                </div>
-
-                <div>
-
-                    <h2>
-                        API Information
-                    </h2>
-
-                    <p>
-                        FastAPI backend endpoints.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="api-grid">
-
-
-                <div class="api-item">
-
-                    <span class="method get">
-                        GET
-                    </span>
-
-                    <code>
-                        /
-                    </code>
-
-                    <p>
-                        API information
-                    </p>
-
-                </div>
-
-
-                <div class="api-item">
-
-                    <span class="method get">
-                        GET
-                    </span>
-
-                    <code>
-                        /health
-                    </code>
-
-                    <p>
-                        Health check
-                    </p>
-
-                </div>
-
-
-                <div class="api-item">
-
-                    <span class="method post">
-                        POST
-                    </span>
-
-                    <code>
-                        /generate
-                    </code>
-
-                    <p>
-                        Generate QR
-                    </p>
-
-                </div>
-
-
-                <div class="api-item">
-
-                    <span class="method post">
-                        POST
-                    </span>
-
-                    <code>
-                        /decode
-                    </code>
-
-                    <p>
-                        Decode QR
-                    </p>
-
-                </div>
-
-
-                <div class="api-item">
-
-                    <span class="method get">
-                        GET
-                    </span>
-
-                    <code>
-                        /info
-                    </code>
-
-                    <p>
-                        Application information
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <a
-                id="swaggerLink"
-                class="docs-button"
-                href="#"
-                target="_blank"
-            >
-                📘 Open Swagger API Documentation
-            </a>
-
-        </section>
-
-
-        <!-- ==================================================
-             TECHNOLOGY STACK
-        =================================================== -->
-
-        <section class="card">
-
-            <div class="section-header">
-
-                <div class="section-number">
-                    4
-                </div>
-
-                <div>
-
-                    <h2>
-                        Technology Stack
-                    </h2>
-
-                    <p>
-                        Technologies used in this project.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="technology-grid">
-
-
-                <div class="technology-item">
-
-                    <strong>
-                        Frontend
-                    </strong>
-
-                    <span>
-                        HTML + CSS + JavaScript
-                    </span>
-
-                </div>
-
-
-                <div class="technology-item">
-
-                    <strong>
-                        Frontend Hosting
-                    </strong>
-
-                    <span>
-                        Netlify
-                    </span>
-
-                </div>
-
-
-                <div class="technology-item">
-
-                    <strong>
-                        Backend
-                    </strong>
-
-                    <span>
-                        FastAPI
-                    </span>
-
-                </div>
-
-
-                <div class="technology-item">
-
-                    <strong>
-                        QR Generation
-                    </strong>
-
-                    <span>
-                        QRCode
-                    </span>
-
-                </div>
-
-
-                <div class="technology-item">
-
-                    <strong>
-                        Image Processing
-                    </strong>
-
-                    <span>
-                        Pillow
-                    </span>
-
-                </div>
-
-
-                <div class="technology-item">
-
-                    <strong>
-                        QR Decoding
-                    </strong>
-
-                    <span>
-                        ZXing-C++
-                    </span>
-
-                </div>
-
-
-                <div class="technology-item">
-
-                    <strong>
-                        API Format
-                    </strong>
-
-                    <span>
-                        REST + JSON
-                    </span>
-
-                </div>
-
-
-                <div class="technology-item">
-
-                    <strong>
-                        OpenCV
-                    </strong>
-
-                    <span>
-                        Not Used
-                    </span>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-
-    <!-- ==================================================
-         FOOTER
-    =================================================== -->
-
-    <footer class="footer">
-
-        <div class="container">
-
-            <strong>
-                PragyanAI
-            </strong>
-
-            <p>
-                QR Code Generator & Decoder
-            </p>
-
-            <p>
-                Built with HTML, CSS, JavaScript,
-                FastAPI, Pillow and ZXing-C++
-            </p>
+            <ul id="selectedFiles"></ul>
 
         </div>
 
-    </footer>
+
+        <button
+            id="mergeButton"
+            class="primary-button"
+            disabled
+        >
+            📄 Merge PDF Files
+        </button>
 
 
-    <script
-        src="script.js"
-    ></script>
+        <div
+            id="mergeMessage"
+            class="message"
+        ></div>
 
+
+        <!-- Download Result -->
+
+        <div
+            id="resultContainer"
+            class="qr-container hidden"
+        >
+
+            <h3>
+                PDF Merged Successfully
+            </h3>
+
+            <p>
+                Your PDF files have been merged into one document.
+            </p>
+
+
+            <div class="qr-actions">
+
+                <a
+                    id="downloadButton"
+                    class="secondary-button"
+                    download="merged.pdf"
+                >
+                    ⬇️ Download Merged PDF
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         HOW IT WORKS
+    =================================================== -->
+
+    <section class="card">
+
+        <div class="section-header">
+
+            <div class="section-number">
+                2
+            </div>
+
+            <div>
+
+                <h2>
+                    How It Works
+                </h2>
+
+                <p>
+                    Simple steps to merge your PDF files.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="technology-grid">
+
+            <div class="technology-item">
+
+                <strong>
+                    Step 1
+                </strong>
+
+                <span>
+                    Select multiple PDF files
+                </span>
+
+            </div>
+
+
+            <div class="technology-item">
+
+                <strong>
+                    Step 2
+                </strong>
+
+                <span>
+                    Upload files to the backend
+                </span>
+
+            </div>
+
+
+            <div class="technology-item">
+
+                <strong>
+                    Step 3
+                </strong>
+
+                <span>
+                    FastAPI merges the PDFs
+                </span>
+
+            </div>
+
+
+            <div class="technology-item">
+
+                <strong>
+                    Step 4
+                </strong>
+
+                <span>
+                    Download the merged PDF
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         API INFORMATION
+    =================================================== -->
+
+    <section class="card">
+
+        <div class="section-header">
+
+            <div class="section-number">
+                3
+            </div>
+
+            <div>
+
+                <h2>
+                    API Information
+                </h2>
+
+                <p>
+                    FastAPI backend endpoints.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="api-grid">
+
+
+            <div class="api-item">
+
+                <span class="method get">
+                    GET
+                </span>
+
+                <code>
+                    /
+                </code>
+
+                <p>
+                    API information
+                </p>
+
+            </div>
+
+
+            <div class="api-item">
+
+                <span class="method get">
+                    GET
+                </span>
+
+                <code>
+                    /health
+                </code>
+
+                <p>
+                    Health check
+                </p>
+
+            </div>
+
+
+            <div class="api-item">
+
+                <span class="method post">
+                    POST
+                </span>
+
+                <code>
+                    /merge
+                </code>
+
+                <p>
+                    Merge PDF files
+                </p>
+
+            </div>
+
+
+            <div class="api-item">
+
+                <span class="method get">
+                    GET
+                </span>
+
+                <code>
+                    /info
+                </code>
+
+                <p>
+                    Application information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a
+            id="swaggerLink"
+            class="docs-button"
+            href="#"
+            target="_blank"
+        >
+            📘 Open Swagger API Documentation
+        </a>
+
+    </section>
+
+
+    <!-- ==================================================
+         TECHNOLOGY STACK
+    =================================================== -->
+
+    <section class="card">
+
+        <div class="section-header">
+
+            <div class="section-number">
+                4
+            </div>
+
+            <div>
+
+                <h2>
+                    Technology Stack
+                </h2>
+
+                <p>
+                    Technologies used in this project.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="technology-grid">
+
+
+            <div class="technology-item">
+
+                <strong>
+                    Frontend
+                </strong>
+
+                <span>
+                    HTML + CSS + JavaScript
+                </span>
+
+            </div>
+
+
+            <div class="technology-item">
+
+                <strong>
+                    Frontend Hosting
+                </strong>
+
+                <span>
+                    Netlify
+                </span>
+
+            </div>
+
+
+            <div class="technology-item">
+
+                <strong>
+                    Backend
+                </strong>
+
+                <span>
+                    FastAPI
+                </span>
+
+            </div>
+
+
+            <div class="technology-item">
+
+                <strong>
+                    PDF Processing
+                </strong>
+
+                <span>
+                    PyPDF
+                </span>
+
+            </div>
+
+
+            <div class="technology-item">
+
+                <strong>
+                    API Format
+                </strong>
+
+                <span>
+                    REST + JSON
+                </span>
+
+            </div>
+
+
+            <div class="technology-item">
+
+                <strong>
+                    File Upload
+                </strong>
+
+                <span>
+                    FastAPI UploadFile
+                </span>
+
+            </div>
+
+
+            <div class="technology-item">
+
+                <strong>
+                    Output
+                </strong>
+
+                <span>
+                    Merged PDF
+                </span>
+
+            </div>
+
+
+            <div class="technology-item">
+
+                <strong>
+                    Database
+                </strong>
+
+                <span>
+                    Not Required
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- ==================================================
+     FOOTER
+=================================================== -->
+
+<footer class="footer">
+
+    <div class="container">
+
+        <strong>
+            PragyanAI
+        </strong>
+
+        <p>
+            PDF Merger
+        </p>
+
+        <p>
+            Built with HTML, CSS, JavaScript,
+            FastAPI and PyPDF
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script
+    src="script.js"
+></script>
+```
 
 </body>
 
-</html>
+    </html>
