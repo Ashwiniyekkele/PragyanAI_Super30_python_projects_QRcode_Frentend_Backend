@@ -310,4 +310,4 @@ def decode_qr_from_bytes(
     return decode_qr_image(
 
         image
-  )
+    )
