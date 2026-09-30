@@ -16,7 +16,7 @@
 // Replace this with your deployed FastAPI backend URL.
 
 const API_URL =
-    "https://your-fastapi-backend.onrender.com";
+    "https://pragyanai-super30-python-projects-qrcode-asd4.onrender.com/";
 
 console.log("PDF Merger API URL:", API_URL);
 
